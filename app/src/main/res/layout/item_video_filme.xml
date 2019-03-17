@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/shadow_12655"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
@@ -10,14 +11,14 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="2dp"
-        app:cardElevation="0dp"
+        app:cardElevation="4dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <FrameLayout
-            android:layout_width="220dp"
-            android:layout_height="110dp">
+            android:layout_width="180dp"
+            android:layout_height="140dp">
 
             <ImageView
                 android:id="@+id/videoThumbImageView"
@@ -27,14 +28,14 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/transparencia_branca"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@color/transparencia_branca" />
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_play_arrow"/>
+                android:src="@drawable/ic_play_arrow" />
 
         </FrameLayout>
 

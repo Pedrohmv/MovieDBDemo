@@ -1,5 +1,7 @@
 package br.com.pedrohmv.ui.detalhe
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.LinearLayout
@@ -58,7 +60,10 @@ class DetalheFilmeActivity : AppCompatActivity() {
 
         viewModel.videos.observe(this, Observer { videos ->
             videos?.let {
-                setupVideosRecyclerView(videos)
+                val trailers = videos.filter {
+                    it.site.equals("youtube", true)
+                }
+                setupVideosRecyclerView(trailers)
             }
         })
 
@@ -75,7 +80,13 @@ class DetalheFilmeActivity : AppCompatActivity() {
 
     private fun setupVideosRecyclerView(videos: List<Video>) {
         videosRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.HORIZONTAL, false)
-        videosRecyclerView.adapter = VideoAdapter(videos)
+        videosRecyclerView.adapter = VideoAdapter(videos) {
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("http://www.youtube.com/watch?v=$it")
+            )
+            startActivity(intent)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -25,7 +25,7 @@ fun createOkHttpClient(): OkHttpClient {
             val request = chain.request()
             val url = request.url().newBuilder()
                 .addQueryParameter("api_key", API_KEY)
-                .addQueryParameter("language", "pt-BR")
+//                .addQueryParameter("language", "pt-BR")
                 .build()
             val newRequest = request.newBuilder().url(url).build()
             chain.proceed(newRequest)

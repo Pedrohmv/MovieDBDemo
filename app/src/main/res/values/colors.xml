@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="transparencia_branca">#99FFFFFF</color>
+    <color name="background_activity">#292631</color>
 </resources>
