@@ -2,5 +2,6 @@ package br.com.pedrohmv.util.base
 
 sealed class Event
 
-class LoadingEvent : Event()
-class ErrorEvent(errorMessage: String) : Event()
+object LoadingEvent : Event()
+class ErrorEvent(val errorMessage: String) : Event()
+object SuccessEvent: Event()

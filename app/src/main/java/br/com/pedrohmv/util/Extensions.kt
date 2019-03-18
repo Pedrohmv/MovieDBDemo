@@ -30,8 +30,8 @@ fun ViewGroup.inflate(layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
 
-fun Context.toast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+fun Fragment.toast(message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
 fun ImageView.loadImageUrl(url: String) =

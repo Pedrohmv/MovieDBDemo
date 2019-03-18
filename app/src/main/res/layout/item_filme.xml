@@ -25,10 +25,11 @@
             android:id="@+id/tituloTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            android:background="@color/transparencia"
             android:padding="16dp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/dark_text"
             android:textSize="18sp"
+            android:text="Filme da nasa"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -14,8 +14,13 @@ import br.com.pedrohmv.R
 import br.com.pedrohmv.domain.Filme
 import br.com.pedrohmv.ui.MainActivity
 import br.com.pedrohmv.ui.detalhe.DetalheFilmeActivity
+import br.com.pedrohmv.util.base.ErrorEvent
+import br.com.pedrohmv.util.base.LoadingEvent
+import br.com.pedrohmv.util.base.SuccessEvent
 import br.com.pedrohmv.util.inflate
+import br.com.pedrohmv.util.toast
 import kotlinx.android.synthetic.main.fragment_genero.*
+import kotlinx.android.synthetic.main.partial_loading_filme.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GeneroFragment : Fragment() {
@@ -29,6 +34,8 @@ class GeneroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loadingLayout.startShimmerAnimation()
+
         arguments?.let {
             idGenero = it.getInt("ID_GENERO")
             if (idGenero == 0){
@@ -38,6 +45,19 @@ class GeneroFragment : Fragment() {
             viewModel.filmeList.observe(this, Observer { filmes ->
                 filmes?.let {
                     setupFilmeRecyclerView(filmes)
+                }
+            })
+
+            viewModel.events.observe(this, Observer { event ->
+                event?.let {
+                    when (event){
+                        is LoadingEvent -> loadingLayout.visibility = View.VISIBLE
+                        is ErrorEvent -> toast(event.errorMessage)
+                        is SuccessEvent -> {
+                            loadingLayout.visibility = View.GONE
+                            filmeRecyclerView.visibility = View.VISIBLE
+                        }
+                    }
                 }
             })
 
@@ -61,6 +81,7 @@ class GeneroFragment : Fragment() {
     }
 
     private fun setupFilmeRecyclerView(filmes: List<Filme>) {
+
         val adapter = FilmeAdapter(filmes) { sharedView, filme ->
             val intent = Intent(activity, DetalheFilmeActivity::class.java).apply {
                 putExtra("FILME", filme)
