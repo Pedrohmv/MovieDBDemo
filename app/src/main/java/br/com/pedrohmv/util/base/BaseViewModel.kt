@@ -5,8 +5,6 @@ import kotlinx.coroutines.*
 
 abstract class BaseViewModel(private val coroutineScope: AppCoroutineScope) : ViewModel() {
 
-//    val coroutineScope = MainCoroutineScope()
-
     fun launch(block: suspend CoroutineScope.() -> Unit, errorFunction: ErrorFunction? = null){
         coroutineScope.launchOnUI(block, errorFunction)
     }

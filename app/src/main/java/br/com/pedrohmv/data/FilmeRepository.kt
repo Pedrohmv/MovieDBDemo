@@ -5,9 +5,9 @@ import br.com.pedrohmv.domain.Video
 
 interface FilmeRepository {
 
-    suspend open fun obterFilmesPopulares(idGenero: Int?, tituloFilme: String?): List<Filme>
+    suspend fun obterFilmesPopulares(idGenero: Int?, tituloFilme: String?): List<Filme>
 
-    suspend open fun obterFilmesPopularesRemote()
+    suspend fun obterFilmesPopularesRemote()
 
     suspend fun obterFilmesSimilares(idFilme: Int): List<Filme>?
 
