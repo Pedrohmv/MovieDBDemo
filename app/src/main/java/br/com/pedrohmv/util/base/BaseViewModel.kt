@@ -3,9 +3,9 @@ package br.com.pedrohmv.util.base
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel(private val coroutineScope: AppCoroutineScope) : ViewModel() {
 
-    val coroutineScope = AppCoroutineScope()
+//    val coroutineScope = MainCoroutineScope()
 
     fun launch(block: suspend CoroutineScope.() -> Unit, errorFunction: ErrorFunction? = null){
         coroutineScope.launchOnUI(block, errorFunction)

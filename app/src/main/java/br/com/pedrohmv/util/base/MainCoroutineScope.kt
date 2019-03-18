@@ -7,14 +7,19 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class AppCoroutineScope : CoroutineScope {
+interface AppCoroutineScope : CoroutineScope {
+
+    fun launchOnUI(block: suspend CoroutineScope.() -> Unit, errorFunction: ErrorFunction? = null)
+
+}
+
+class MainCoroutineScope : AppCoroutineScope {
 
     private val job = Job()
 
     override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 
-
-    fun launchOnUI(block: suspend CoroutineScope.() -> Unit, errorFunction: ErrorFunction? = null) {
+    override fun launchOnUI(block: suspend CoroutineScope.() -> Unit, errorFunction: ErrorFunction?) {
         launch(coroutineContext) {
             try {
                 block()

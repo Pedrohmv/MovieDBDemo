@@ -1,15 +1,17 @@
 package br.com.pedrohmv.ui.detalhe
 
-import androidx.lifecycle.MutableLiveData
 import br.com.pedrohmv.data.FilmeRepository
 import br.com.pedrohmv.domain.Filme
 import br.com.pedrohmv.domain.Video
+import br.com.pedrohmv.util.base.AppCoroutineScope
+import br.com.pedrohmv.util.base.MainCoroutineScope
 import br.com.pedrohmv.util.base.BaseViewModel
 import br.com.pedrohmv.util.base.SingleLiveEvent
 
 class DetalheFilmeViewModel(
-    private val filmeRepository: FilmeRepository
-) : BaseViewModel() {
+    private val filmeRepository: FilmeRepository,
+    appCoroutineScope: AppCoroutineScope
+) : BaseViewModel(appCoroutineScope) {
 
     val filmesSimilares = SingleLiveEvent<List<Filme>>()
     val videos = SingleLiveEvent<List<Video>>()

@@ -1,14 +1,14 @@
 package br.com.pedrohmv.ui.genero
 
-import androidx.lifecycle.MutableLiveData
 import br.com.pedrohmv.data.FilmeRepository
 import br.com.pedrohmv.domain.Filme
 import br.com.pedrohmv.util.base.*
 import java.net.SocketTimeoutException
 
 class GeneroViewModel(
-    private val filmeRepository: FilmeRepository
-) : BaseViewModel() {
+    private val filmeRepository: FilmeRepository,
+    appCoroutineScope: AppCoroutineScope
+) : BaseViewModel(appCoroutineScope) {
 
     val filmeList = SingleLiveEvent<List<Filme>>()
     val events = SingleLiveEvent<Event>()
