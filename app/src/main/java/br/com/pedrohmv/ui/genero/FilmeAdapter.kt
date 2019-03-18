@@ -2,6 +2,8 @@ package br.com.pedrohmv.ui.genero
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import br.com.pedrohmv.R
 import br.com.pedrohmv.di.IMAGE_URL
@@ -13,7 +15,7 @@ import kotlinx.android.synthetic.main.item_filme.view.*
 class FilmeAdapter(
     private val filmeList: List<Filme>,
     private val onItemClick: (View, Filme) -> Unit
-) : RecyclerView.Adapter<FilmeAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<FilmeAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(parent.inflate(R.layout.item_filme))
@@ -34,4 +36,5 @@ class FilmeAdapter(
             }
         }
     }
+
 }

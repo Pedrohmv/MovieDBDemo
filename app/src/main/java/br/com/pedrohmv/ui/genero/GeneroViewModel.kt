@@ -15,9 +15,9 @@ class GeneroViewModel(
     val filmeList = MutableLiveData<List<Filme>>()
     val events = MutableLiveData<Event>()
 
-    fun obterFilmesPopulares() {
+    fun obterFilmesPopulares(idGenero: Int?, tituloFilme: String? = null) {
         launch({
-            filmeList.value = filmeRepository.obterFilmesPopulares()
+            filmeList.value = filmeRepository.obterFilmesPopulares(idGenero, tituloFilme)
         },{
             events.value = if (it is SocketTimeoutException)
                 ErrorEvent("Verifique sua conexão com a internet")

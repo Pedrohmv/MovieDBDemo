@@ -4,15 +4,15 @@ package br.com.pedrohmv.ui.genero
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.pedrohmv.R
 import br.com.pedrohmv.domain.Filme
+import br.com.pedrohmv.ui.MainActivity
 import br.com.pedrohmv.ui.detalhe.DetalheFilmeActivity
 import br.com.pedrohmv.util.inflate
 import kotlinx.android.synthetic.main.fragment_genero.*
@@ -21,6 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class GeneroFragment : Fragment() {
 
     private val viewModel by viewModel<GeneroViewModel>()
+    private var idGenero: Int? = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.fragment_genero)
@@ -28,24 +29,39 @@ class GeneroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         arguments?.let {
-            val idGenero = it.getInt("ID_GENERO")
-
+            idGenero = it.getInt("ID_GENERO")
+            if (idGenero == 0){
+                idGenero = null
+                setSearchListener()
+            }
             viewModel.filmeList.observe(this, Observer { filmes ->
                 filmes?.let {
-                    val filmeGenero = it.filter { it.listaIdGenero.contains(idGenero) }
-                    setupFilmeRecyclerView(filmeGenero)
+                    setupFilmeRecyclerView(filmes)
                 }
             })
 
-            viewModel.obterFilmesPopulares()
+            viewModel.obterFilmesPopulares(idGenero)
+
         }
     }
 
+    private fun setSearchListener() {
+        (activity as MainActivity).searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.obterFilmesPopulares(idGenero, newText)
+                return true
+            }
+
+        })
+    }
+
     private fun setupFilmeRecyclerView(filmes: List<Filme>) {
-        filmeRecyclerView.layoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
-        filmeRecyclerView.adapter = FilmeAdapter(filmes) { sharedView, filme ->
+        val adapter = FilmeAdapter(filmes) { sharedView, filme ->
             val intent = Intent(activity, DetalheFilmeActivity::class.java).apply {
                 putExtra("FILME", filme)
             }
@@ -53,6 +69,9 @@ class GeneroFragment : Fragment() {
             val option = ActivityOptions.makeSceneTransitionAnimation(activity, sharedView, "posterFilmeTransition")
             startActivity(intent, option.toBundle())
         }
+
+        filmeRecyclerView.layoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
+        filmeRecyclerView.adapter = adapter
     }
 
 }

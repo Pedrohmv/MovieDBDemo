@@ -5,7 +5,7 @@ import br.com.pedrohmv.domain.Video
 
 interface FilmeRepository {
 
-    suspend fun obterFilmesPopulares(): List<Filme>
+    suspend fun obterFilmesPopulares(idGenero: Int?, tituloFilme: String?): List<Filme>
 
     suspend fun obterFilmesPopularesRemote()
 
@@ -27,9 +27,12 @@ class FilmeRepositoryImpl(
     private val cachedFilmesSimilares = mutableMapOf<Int, List<Filme>>()
     private val cachedVideosFilme = mutableMapOf<Int, List<Video>>()
 
-    override suspend fun obterFilmesPopulares(): List<Filme> {
+    override suspend fun obterFilmesPopulares(idGenero: Int?, tituloFilme: String?): List<Filme> {
         if (cachedFilmeList.isEmpty()) obterFilmesPopularesRemote()
-        return cachedFilmeList.toList()
+        return cachedFilmeList.toList().filter {
+            (it.listaIdGenero.contains(idGenero) or (idGenero == null)) and
+                    (it.titulo.contains(tituloFilme ?: "", true) or (tituloFilme.isNullOrEmpty()))
+        }
     }
 
     override suspend fun obterFilmesPopularesRemote() {
