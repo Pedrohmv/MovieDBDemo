@@ -14,7 +14,7 @@ val appModules = module {
 
     single { FilmeRepositoryImpl(get()) as FilmeRepository }
 
-    single { MainCoroutineScope() as AppCoroutineScope }
+    factory { MainCoroutineScope() as AppCoroutineScope }
 
     viewModel { GeneroViewModel(get(), get()) }
 
