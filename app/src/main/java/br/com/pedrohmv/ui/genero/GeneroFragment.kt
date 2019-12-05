@@ -95,4 +95,14 @@ class GeneroFragment : Fragment() {
         filmeRecyclerView.adapter = adapter
     }
 
+    companion object {
+
+        operator fun invoke(genreId: Int) = GeneroFragment().apply {
+            arguments = Bundle().apply {
+                putInt("ID_GENERO", genreId)
+            }
+        }
+
+    }
+
 }

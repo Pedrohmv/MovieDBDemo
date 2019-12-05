@@ -21,15 +21,14 @@ class GeneroViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         }
     }
 
-    private fun createFragment(position: Int) = GeneroFragment().apply {
-        arguments = Bundle().apply {
-            putInt("ID_GENERO", when(position){
-                0 -> 28
-                1 -> 18
-                2 -> 14
-                else -> 878
-            })
+    private fun createFragment(position: Int): GeneroFragment {
+        val genreId = when(position){
+            0 -> 28
+            1 -> 18
+            2 -> 14
+            else -> 878
         }
-    }
 
+        return GeneroFragment(genreId)
+    }
 }
