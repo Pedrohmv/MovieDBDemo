@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 
 class GeneroViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-    private val fragments = mutableMapOf<Int, GeneroFragment>()
-
     override fun getItem(position: Int) = createFragment(position)
 
     override fun getCount() = 4
@@ -23,7 +21,7 @@ class GeneroViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         }
     }
 
-    private fun createFragment(position: Int) = fragments[position] ?: GeneroFragment().apply {
+    private fun createFragment(position: Int) = GeneroFragment().apply {
         arguments = Bundle().apply {
             putInt("ID_GENERO", when(position){
                 0 -> 28
@@ -32,8 +30,6 @@ class GeneroViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
                 else -> 878
             })
         }
-
-        fragments[position] = this
     }
 
 }
